@@ -8,6 +8,7 @@ import HomeScreen from './screens/HomeScreen';
 import DetailScreen from './screens/DetailScreen';
 import FavoritesScreen from './screens/FavoritesScreen';
 
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 enableScreens();
 
@@ -16,38 +17,49 @@ const Stack = createNativeStackNavigator();
 
 const HomeStack = () => (
   <Stack.Navigator>
-    <Stack.Screen name="Home" component={HomeScreen} />
-    <Stack.Screen name="Detail" component={DetailScreen} />
+    <Stack.Screen name="Home" options={{
+      headerShown: false,
+    }} component={HomeScreen} />
+    <Stack.Screen name="Detail" component={DetailScreen} o />
   </Stack.Navigator>
 );
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <Tab.Navigator>
-        <Tab.Screen
-          name="HomeStack"
-          component={HomeStack}
-          options={{
-            headerShown: false,
-            tabBarLabel: 'Home',
-            tabBarIcon: ({ color }) => (
-              <Icon name="home" type="font-awesome" color={color} />
-            ),
+    <SafeAreaProvider>
+      <NavigationContainer >
+        <Tab.Navigator
+          screenOptions={{
+            tabBarActiveTintColor: 'black'
           }}
-        />
-        <Tab.Screen
-          name="Favorites"
-          component={FavoritesScreen}
-          options={{
-            tabBarLabel: 'Favorites',
-            tabBarIcon: ({ color }) => (
-              <Icon name="heart" type="font-awesome" color={color} />
-            ),
-          }}
-        />
-      </Tab.Navigator>
-    </NavigationContainer>
+          initialRouteName="HomeStack"
+
+        >
+          <Tab.Screen
+            name="HomeStack"
+            component={HomeStack}
+            options={{
+              headerShown: false,
+              tabBarLabel: 'Home',
+              tabBarIcon: ({ color }) => (
+                <Icon name="home" type="font-awesome" color={color} />
+              ),
+            }}
+          />
+          <Tab.Screen
+            name="Favorites"
+            component={FavoritesScreen}
+            options={{
+              headerShown: false,
+              tabBarLabel: 'Favorites',
+              tabBarIcon: ({ color }) => (
+                <Icon name="heart" type="font-awesome" color={color} />
+              ),
+            }}
+          />
+        </Tab.Navigator>
+      </NavigationContainer>
+    </SafeAreaProvider>
   );
 };
 

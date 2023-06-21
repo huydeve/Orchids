@@ -62,8 +62,7 @@ export default function DetailScreen({ route }) {
                 <Icon
                     name={isFavorite ? 'heart' : 'heart-o'}
                     size={24}
-                    color={isFavorite ? 'red' : 'black'}
-                    className="text-red-500"
+                    color={'black'}
                 />
             </TouchableOpacity>
             <TouchableOpacity onPress={goBack} className="p-2">

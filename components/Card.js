@@ -6,8 +6,11 @@ export default function Card({ item, data, onPress }) {
 
     return (
         <View className='border-gray-700 border-4 p-2 rounded-2xl mb-4 flex-row items-center justify-between'>
-            <Image source={item.image} className="w-32 h-32 rounded-2xl" />
-            <Text className="text-lg">{item.name}</Text>
+            <Image source={item.image} className="w-32 h-32 rounded-2xl" style={{ resizeMode: 'contain' }} />
+            <View>
+                <Text className='text-xs'>{item.category}</Text>
+                <Text className="text-2xl">{item.name}</Text>
+            </View>
             <TouchableOpacity
                 className="p-1 rounded-lg self-start"
                 onPress={onPress}

@@ -1,50 +1,76 @@
-import { useIsFocused, useNavigation } from '@react-navigation/native';
-import React from 'react';
-import { FlatList, Text, TouchableOpacity, View } from 'react-native';
+import { useIsFocused } from '@react-navigation/native';
+import React, { useCallback, useRef, useState } from 'react';
+import { Button, FlatList, Text, TouchableOpacity, View, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import EntypoIcon from 'react-native-vector-icons/Entypo';
+import BottomSheet from '../components/BottomSheet';
 import Card from '../components/Card';
 import Loading from '../components/Loading';
 import useFavorite from '../hooks/useFavorite';
-
+import BottomSheetFilter from '../components/BottomSheetFilter';
 // Sample data
-const orchids = [
+const orchidsList = [
     {
         id: 1,
         name: 'Orchid 1',
-        image: require('../assets/icon.png'),
+        category: 'Category 1',
+        image: require('../assets/1.jpg'),
     },
     {
         id: 2,
         name: 'Orchid 2',
-        image: require('../assets/icon.png'),
+        category: 'Category 2',
+        image: require('../assets/2.jpg'),
     },
     {
         id: 3,
         name: 'Orchid 3',
-        image: require('../assets/icon.png'),
+        category: 'Category 2',
+        image: require('../assets/3.jpg'),
     },
     {
         id: 4,
         name: 'Orchid 4',
-        image: require('../assets/icon.png'),
+        category: 'Category 3',
+        image: require('../assets/4.jpg'),
     },
     {
         id: 5,
         name: 'Orchid 5',
-        image: require('../assets/icon.png'),
+        category: 'Category 3',
+        image: require('../assets/5.jpg'),
     },
     // Add more orchids as needed
 ];
 
-const HomeScreen = () => {
-    const navigation = useNavigation();
-    const { addToFavorites, favorites, loading } = useFavorite(useIsFocused())
+
+
+const HomeScreen = ({ navigation }) => {
+    // const navigation = useNavigation();
+    const isFocused = useIsFocused()
+    const { addToFavorites, favorites, loading } = useFavorite(isFocused)
+    const [orchids, setOrchids] = useState(orchidsList)
     const { top } = useSafeAreaInsets();
 
 
     const goToDetailScreen = (orchid) => {
-        navigation.navigate('Detail', { orchid });
+        navigation.navigate('HomeDetail', { orchid });
     };
+    const handleFilter = (categories) => {
+        if (categories.length == 0) { setOrchids(orchidsList) }
+        else {
+            const arr = []
+            console.log(categories);
+            for (let i = 0; i < categories.length; i++) {
+                for (let j = 0; j < orchidsList.length; j++) {
+                    if (categories[i] == orchidsList[j].category) arr.push(orchidsList[j])
+                    console.log(categories[i]);
+                }
+
+            }
+            setOrchids(arr)
+        }
+    }
 
     const renderItem = ({ item }) => (
         <TouchableOpacity
@@ -56,9 +82,25 @@ const HomeScreen = () => {
         </TouchableOpacity>
     );
 
+
+
+
     return (
         <View className="flex-1" style={{ marginTop: top }}>
-            <View className='justify-center items-center'><Text className="text-2xl font-bold my-4">Orchids</Text></View>
+            <View className='justify-between items-center flex-row px-4 my-4'>
+                <TouchableOpacity
+                    onPress={() => navigation.openDrawer()}
+                >
+                    <EntypoIcon name='menu' size={24}
+                        color="black"
+                        className="text-black" />
+
+                </TouchableOpacity>
+                <Text className="text-2xl font-bold ">Orchids</Text>
+            </View>
+            <BottomSheetFilter onChange={handleFilter} />
+
+            <View className='mb-2' />
             {loading ? (<Loading />) : (
 
                 <FlatList
@@ -68,6 +110,7 @@ const HomeScreen = () => {
                     className="px-4"
                 />)
             }
+
         </View>
 
     );

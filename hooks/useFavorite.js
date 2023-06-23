@@ -1,16 +1,20 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react';
 
 export default function useFavorite(isFocused) {
     const [favorites, setFavorites] = useState([]);
     const [loading, setLoading] = useState(true);
+    const favoritesBase = useRef([])
     useEffect(() => {
         const loadFavorites = async () => {
             try {
                 const favoritesString = await AsyncStorage.getItem('favorites');
                 if (favoritesString) {
                     const favoritesArray = JSON.parse(favoritesString);
+                    favoritesBase.current = favoritesArray
                     setFavorites(favoritesArray);
+                } else if (favoritesString == null) {
+                    setFavorites([]);
                 }
             } catch (error) {
                 console.log('Error loading favorites:', error);
@@ -36,8 +40,9 @@ export default function useFavorite(isFocused) {
     };
     const removeAllFavorites = async () => {
         try {
-            await AsyncStorage.setItem('favorites', JSON.stringify([]));
+            await AsyncStorage.removeItem('favorites');
             setFavorites([]);
+            favoritesBase.current = []
         } catch (error) {
             console.log('Error removing favorites:', error);
         }
@@ -67,6 +72,7 @@ export default function useFavorite(isFocused) {
     return {
         favorites,
         loading,
+        favoritesBase,
         setFavorites,
         removeFavorite,
         removeAllFavorites,

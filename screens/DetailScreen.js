@@ -55,7 +55,7 @@ export default function DetailScreen({ route }) {
 
     return (
         <View className="flex-1 items-center justify-center">
-            <Image source={orchid.image} className="w-64 h-64 mb-8" />
+            <Image source={orchid.image} className="w-64 h-64 mb-8 rounded-2xl" style={{resizeMode:'contain'}} />
             <Text className="text-2xl font-bold mb-4">{orchid.name}</Text>
             <Text className="text-lg mb-6">{orchid.description}</Text>
             <TouchableOpacity onPress={toggleFavorite} className="p-2 rounded-full bg-gray-200 mb-4">

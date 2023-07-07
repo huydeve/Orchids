@@ -1,21 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import React, { forwardRef, useCallback, useImperativeHandle } from 'react';
 import {
     StyleSheet,
     View,
-    useWindowDimensions,
-    TouchableWithoutFeedback,
-    TouchableOpacity,
-    TouchableHighlightComponent,
+    useWindowDimensions
 } from 'react-native';
-import React, { forwardRef, useImperativeHandle, useCallback } from 'react';
-import Animated, {
-    useSharedValue,
-    useAnimatedStyle,
-    withSpring,
-    useAnimatedGestureHandler,
-    interpolate,
-} from 'react-native-reanimated';
 import { PanGestureHandler } from 'react-native-gesture-handler';
+import Animated, {
+    interpolate,
+    useAnimatedGestureHandler,
+    useAnimatedStyle,
+    useSharedValue,
+    withSpring,
+} from 'react-native-reanimated';
 const BottomSheet = forwardRef(
     ({ activeHeight, children, backgroundColor, backDropColor }, ref) => {
         const { height } = useWindowDimensions();
@@ -42,6 +39,7 @@ const BottomSheet = forwardRef(
             () => ({
                 expand,
                 close,
+
             }),
             [expand, close],
         );
@@ -99,10 +97,9 @@ const BottomSheet = forwardRef(
 
         return (
             <>
-                <TouchableWithoutFeedback
+                {/* <TouchableWithoutFeedback
                     onPress={() => {
                         close();
-                        console.log('x');
                     }}>
                     <Animated.View
                         style={[
@@ -111,8 +108,14 @@ const BottomSheet = forwardRef(
                             { backgroundColor: backDropColor },
                         ]}
                     />
-                </TouchableWithoutFeedback>
-
+                </TouchableWithoutFeedback> */}
+                <Animated.View
+                    style={[
+                        styles.backDrop,
+                        backDropAnimation,
+                        { backgroundColor: backDropColor },
+                    ]}
+                />
                 <PanGestureHandler onGestureEvent={gestureHandler}>
                     <Animated.View
                         style={[

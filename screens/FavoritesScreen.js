@@ -65,27 +65,28 @@ export default function FavoritesScreen() {
                 <Text className="text-2xl font-bold ">Favorites</Text>
 
 
+                {favorites.length > 0 && (
+                    <TouchableOpacity
+                        onPress={() => {
+                            Alert.alert(
+                                'Remove All Favorites',
+                                'Are you sure you want to remove all favorites?',
+                                [
+                                    {
+                                        text: 'Cancel',
+                                        style: 'cancel',
+                                    },
+                                    { text: 'OK', onPress: removeAllFavorites },
+                                ],
+                                { cancelable: false }
+                            );
+                        }}
+                    >
+                        <AntDesign name="delete" size={24} color="black" />
+                    </TouchableOpacity>
+                )}
 
-                <TouchableOpacity
-                    onPress={() => {
-                        Alert.alert(
-                            'Remove All Favorites',
-                            'Are you sure you want to remove all favorites?',
-                            [
-                                {
-                                    text: 'Cancel',
-                                    style: 'cancel',
-                                },
-                                { text: 'OK', onPress: removeAllFavorites },
-                            ],
-                            { cancelable: false }
-                        );
-                    }}
-                >
-                    <AntDesign name="delete" size={24} color="black" />
-                </TouchableOpacity>
             </View>
-            <BottomSheetFilter data={favorites} onChange={handleFilter} />
 
             <View className='mb-4' />
             {loading ? (<Loading />
@@ -101,11 +102,11 @@ export default function FavoritesScreen() {
                             className="px-4"
                         />
                     ) : (
-                        <View className='justify-center items-center h-4/5'>
+                        <View className='justify-center items-center flex-1'>
                             <Text className="text-lg mb-3 mt-8">No favorite orchids found.</Text>
-                            <TouchableOpacity onPress={goBack} className="p-2">
+                            {/* <TouchableOpacity onPress={goBack} className="p-2">
                                 <Text className="text-blue-500">Go Back</Text>
-                            </TouchableOpacity>
+                            </TouchableOpacity> */}
                         </View>
                     )}
 
@@ -115,6 +116,10 @@ export default function FavoritesScreen() {
 
             )
             }
+            {favorites.length > 0 && (
+                <BottomSheetFilter data={favorites} onChange={handleFilter} />
+
+            )}
 
         </View>
     );

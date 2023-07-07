@@ -1,6 +1,7 @@
-import React, { useCallback, useRef, useState } from 'react';
-import { Button, FlatList, Text, TouchableHighlight, TouchableOpacity, View, useWindowDimensions } from 'react-native';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { Button, FlatList, Pressable, Text, TouchableHighlight, TouchableOpacity, View, useWindowDimensions } from 'react-native';
 import BottomSheet from './BottomSheet';
+import { MaterialIcons } from '@expo/vector-icons';
 
 const categories = [
      { id: '1', name: 'Category 1' },
@@ -14,6 +15,8 @@ const BottomSheetFilter = ({ onChange }) => {
 
      const [selectedItems, setSelectedItems] = useState([]);
 
+
+
      const toggleItem = (item) => {
           const isChecked = selectedItems.includes(item.name);
           let list = [...selectedItems, item.name]
@@ -25,7 +28,7 @@ const BottomSheetFilter = ({ onChange }) => {
      }
 
      const { height } = useWindowDimensions();
-     const bottomSheetRef = useRef();
+     const bottomSheetRef = useRef('');
 
      const pressHandler = useCallback(() => {
           bottomSheetRef.current.expand();
@@ -34,21 +37,24 @@ const BottomSheetFilter = ({ onChange }) => {
      const resetFilter = useCallback(() => {
           setSelectedItems([])
           onChange([])
+
      }, [])
      return (
           <>
-               <View className='flex-row justify-end items-center gap-2 mx-4'>
-                    <TouchableOpacity onPress={() => pressHandler()}>
-                         <View>
-                              <Text className='text-white text-xs bg-gray-900 p-2 rounded-xl'>Filter</Text>
-                         </View>
+               <View className="items-end justify-end ">
+                    {/* Your main content goes here */}
+
+                    {/* FAB */}
+                    <TouchableOpacity
+                         className="absolute right-2 bottom-2 bg-black w-14 h-14 rounded-full flex items-center justify-center shadow-md"
+                         onPress={pressHandler}
+                    >
+                         <MaterialIcons name={'filter-list'} size={24} color="#FFF" />
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => resetFilter()}>
-                         <View className=''>
-                              <Text className='text-black text-xs text-center border-spacing-3 border border-black p-2 rounded-xl'>Reset filter</Text>
-                         </View>
-                    </TouchableOpacity>
-               </View> 
+
+                    {/* Filter */}
+
+               </View>
                <BottomSheet
                     ref={bottomSheetRef}
                     activeHeight={height * 0.5}
@@ -56,6 +62,9 @@ const BottomSheetFilter = ({ onChange }) => {
                     backDropColor={'black'}
                >
                     <View className='p-4'>
+                         <TouchableOpacity className='self-end' onPress={resetFilter}>
+                              <Text>Reset</Text>
+                         </TouchableOpacity>
                          <Text className='text-xl'>Categories</Text>
                          <FlatList
                               data={categories}

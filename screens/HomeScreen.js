@@ -1,43 +1,47 @@
 import { useIsFocused } from '@react-navigation/native';
-import React, { useCallback, useRef, useState } from 'react';
-import { Button, FlatList, Text, TouchableOpacity, View, useWindowDimensions } from 'react-native';
+import React, { useState } from 'react';
+import { FlatList, Text, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
-import BottomSheet from '../components/BottomSheet';
+import BottomSheetFilter from '../components/BottomSheetFilter';
 import Card from '../components/Card';
 import Loading from '../components/Loading';
 import useFavorite from '../hooks/useFavorite';
-import BottomSheetFilter from '../components/BottomSheetFilter';
 // Sample data
 const orchidsList = [
     {
         id: 1,
         name: 'Orchid 1',
         category: 'Category 1',
+        text: "Day la Cay de Orchid",
         image: require('../assets/1.jpg'),
     },
     {
         id: 2,
         name: 'Orchid 2',
         category: 'Category 2',
+        text: "Day la Cay de Orchid",
         image: require('../assets/2.jpg'),
     },
     {
         id: 3,
         name: 'Orchid 3',
         category: 'Category 2',
+        text: "Day la Cay de Orchid",
         image: require('../assets/3.jpg'),
     },
     {
         id: 4,
         name: 'Orchid 4',
         category: 'Category 3',
+        text: "Day la Cay de Orchid",
         image: require('../assets/4.jpg'),
     },
     {
         id: 5,
         name: 'Orchid 5',
         category: 'Category 3',
+        text: "Day la Cay de Orchid",
         image: require('../assets/5.jpg'),
     },
     // Add more orchids as needed
@@ -60,11 +64,9 @@ const HomeScreen = ({ navigation }) => {
         if (categories.length == 0) { setOrchids(orchidsList) }
         else {
             const arr = []
-            console.log(categories);
             for (let i = 0; i < categories.length; i++) {
                 for (let j = 0; j < orchidsList.length; j++) {
                     if (categories[i] == orchidsList[j].category) arr.push(orchidsList[j])
-                    console.log(categories[i]);
                 }
 
             }
@@ -98,7 +100,6 @@ const HomeScreen = ({ navigation }) => {
                 </TouchableOpacity>
                 <Text className="text-2xl font-bold ">Orchids</Text>
             </View>
-            <BottomSheetFilter onChange={handleFilter} />
 
             <View className='mb-2' />
             {loading ? (<Loading />) : (
@@ -110,6 +111,7 @@ const HomeScreen = ({ navigation }) => {
                     className="px-4"
                 />)
             }
+            <BottomSheetFilter onChange={handleFilter} />
 
         </View>
 

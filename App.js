@@ -1,6 +1,6 @@
-import { BottomTabBar, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { CommonActions, NavigationContainer, useNavigation } from '@react-navigation/native';
-import { createNativeStackNavigator, HeaderBackButton } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
 import { Icon } from 'react-native-elements';
 import { enableScreens } from 'react-native-screens';
@@ -8,9 +8,9 @@ import DetailScreen from './screens/DetailScreen';
 import FavoritesScreen from './screens/FavoritesScreen';
 import HomeScreen from './screens/HomeScreen';
 
-import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { TouchableOpacity } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import ContactScreen from './screens/ContactScreen';
 
 enableScreens();
@@ -55,6 +55,7 @@ const TabNavigate = () => (
       options={{
         headerShown: false,
         tabBarLabel: 'Home',
+        unmountOnBlur: true,
         tabBarIcon: ({ color }) => (
           <Icon name="home" type="font-awesome" color={color} />
         ),
@@ -68,6 +69,7 @@ const TabNavigate = () => (
       options={{
         headerShown: false,
         tabBarLabel: 'Favorites',
+        unmountOnBlur: true,
         tabBarIcon: ({ color }) => (
           <Icon name="heart" type="font-awesome" color={color} />
         ),

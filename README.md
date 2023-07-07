@@ -41,7 +41,8 @@ The Orchids App utilizes the following dependencies:
 - React Native: A JavaScript framework for building mobile applications.
 - Expo: A set of tools and services for building, deploying, and running React Native apps.
 - AsyncStorage: A simple, asynchronous, persistent key-value storage system used for storing the favorite orchids.
-
+- NativeWind: uses Tailwind CSS as scripting language to create a universal style system for React Native. NativeWind components can be shared between platforms and will output their styles as CSS StyleSheet on web and StyleSheet.create for native.
+- 
 ## Contributing
 
 Contributions to the Orchids App are welcome! If you find any issues or have suggestions for improvements, please create a pull request or open an issue on the project repository.
